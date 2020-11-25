@@ -5,7 +5,7 @@ from DoorsGame import DoorsGame
 
 class Simulator(object):
 
-    def __init__(self, config):
+    def __init__(self, config: Config):
         self.config = config
         self.score = Score(config)
         self.currentConfig = Config()
@@ -30,4 +30,3 @@ class Simulator(object):
 
                     self.simulate()
                 self.score.printByConfig(self.currentConfig)
-        self.score.print()

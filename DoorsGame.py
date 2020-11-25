@@ -1,12 +1,14 @@
-from GameResult import GameResult
 import random
+from ChoiceStrategy import ChoiceStrategy
+from Config import Config
+from GameResult import GameResult
 from Door import Door
 
 
 class DoorsGame(object):
-    def __init__(self, config):
+    def __init__(self, config: Config):
         self.config = config
-        self.choiceStrategy = config.strategy(self)
+        self.choiceStrategy: ChoiceStrategy = config.strategy(self)
         self.openDoors = []
         self.doors = [Door(i) for i in range(config.totalDoors)]
         self.closedDoors = self.doors.copy()
@@ -36,7 +38,7 @@ class DoorsGame(object):
         door = self.getRandomEmptyClosedDoor()
         self.openDoor(door)
 
-    def openDoor(self, door):
+    def openDoor(self, door: Door):
         door.isOpen = True
         if door in self.emptyClosedDoors:
             self.emptyClosedDoors.remove(door)

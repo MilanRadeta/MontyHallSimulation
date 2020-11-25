@@ -7,5 +7,5 @@ class GameResult(object):
     def __iter__(self):
         return self.definitions.__iter__()
 
-    def __getitem__(self, name: str):
+    def __getitem__(self, name):
         return self.definitions[name]

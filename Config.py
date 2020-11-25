@@ -1,4 +1,5 @@
-class Config():
+class Config(object):
+
     def __init__(self):
         self.strategy = None
         self.totalDoors = None
