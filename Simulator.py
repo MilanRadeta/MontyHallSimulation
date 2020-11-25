@@ -1,34 +1,33 @@
-import pandas
-from Doors import Doors
+from Score import Score
+from Config import Config
+from DoorsGame import DoorsGame
 
 
 class Simulator(object):
-    def __init__(self, config):
-        self.strategies = config['strategies']
-        self.totalDoors = config['totalDoors']
-        self.totalTries = config['totalTries']
 
-    def simulate(totalTries, totalDoors, choiceStrategy, log=False):
+    def __init__(self, config):
+        self.config = config
+        self.score = Score(config)
+        self.currentConfig = Config()
+        self.currentConfig.successDefinitions = self.config.successDefinitions
+
+    def simulate(self, log=False):
         if log:
             print(
-                f'Running simulation for totalTries={totalTries}, totalDoors={totalDoors}, choiceStrategy={choiceStrategy}')
-        wins = 0
-        for i in range(totalTries):
-            hasWon = Doors(totalDoors, choiceStrategy).runGame()
-            if hasWon:
-                wins += 1
-        return wins
+                f'Running simulation for {self.currentConfig}')
+        for i in range(self.currentConfig.totalTries):
+            result = DoorsGame(self.currentConfig).runGame()
+            self.score.update(result, self.currentConfig)
 
     def run(self):
-        for choiceStrategy in self.strategies:
-            data = {}
-            for numberOfDoors in self.totalDoors:
-                data[numberOfDoors] = {}
-                for numOfTries in self.totalTries:
-                    wins = Simulator.simulate(numOfTries, numberOfDoors, choiceStrategy)
-                    data[numberOfDoors][
-                        numOfTries] = f'{round(wins/numOfTries * 100, 2)}%'
-            print()
-            print(choiceStrategy.__name__)
-            print(pandas.DataFrame(data))
-            print()
+        self.score.reset()
+        for totalTries in self.config.totalTries:
+            for totalDoors in self.config.totalDoors:
+                for strategy in self.config.strategy:
+                    self.currentConfig.strategy = strategy
+                    self.currentConfig.totalDoors = totalDoors
+                    self.currentConfig.totalTries = totalTries
+
+                    self.simulate()
+                self.score.printByConfig(self.currentConfig)
+        self.score.print()
