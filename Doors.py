@@ -2,8 +2,9 @@ import random
 from Door import Door
 
 class Doors(object):
-    def __init__(self, totalDoors, choiceStrategy):
+    def __init__(self, totalDoors, choiceStrategy, successDefinitions):
         self.choiceStrategy = choiceStrategy(self)
+        self.successDefinitions = [d(self) for d in successDefinitions]
         self.openDoors = []
         self.doors = [Door(i) for i in range(totalDoors)]
         self.closedDoors = self.doors.copy()
@@ -11,6 +12,7 @@ class Doors(object):
         self.emptyDoors = [door for door in self.doors if not door.hasReward]
         self.emptyClosedDoors = [door for door in self.emptyDoors]
         self.chosenDoor = None
+        self.chosenDoors = []
 
     def getRandomClosedDoor(self):
         return random.choice(self.closedDoors)
@@ -43,6 +45,7 @@ class Doors(object):
     def chooseDoor(self, index=None):
         if index is None:
             self.chosenDoor = self.choiceStrategy.chooseDoor()
+            self.chosenDoors.append(self.chosenDoor)
             return
 
         if index >= len(self.doors) or index < 0:
@@ -50,6 +53,7 @@ class Doors(object):
         if self.doors[index].isOpen:
             raise ValueError('Chosen door is already open')
         self.chosenDoor = self.doors[index]
+        self.chosenDoors.append(self.chosenDoor)
 
     def runGame(self):
         self.chooseDoor()
@@ -59,5 +63,6 @@ class Doors(object):
 
         self.openDoor(self.chosenDoor)
         self.openDoor(self.closedDoors[0])
-
-        return self.chosenDoor == self.rewardDoor
+        
+        res = {definition.__class__.__name__: definition.hasWon() for definition in self.successDefinitions}
+        return res
