@@ -1,24 +1,22 @@
-class SuccessDefinition(object):
-    def __init__(self, game):
-        self.game = game
-    
-    def __str__(self):
-        return self.__class__.__name__
+class RewardDoor():
+    def hasWon(game):
+        return game.chosenDoor == game.rewardDoor
 
-class RewardDoorSuccessDefinition(SuccessDefinition):
-    def hasWon(self):
-        return self.game.chosenDoor == self.game.rewardDoor
 
-class NonRewardDoorSuccessDefinition(SuccessDefinition):
-    def hasWon(self):
-        return self.game.chosenDoor != self.game.rewardDoor
+class NonRewardDoor():
+    def hasWon(game):
+        return game.chosenDoor != game.rewardDoor
 
-class FirstDoorRewardDoorSuccessDefinition(SuccessDefinition):
-    def hasWon(self):
-        return self.game.chosenDoors[0] == self.game.rewardDoor
 
-class FirstDoorNonRewardDoorSuccessDefinition(SuccessDefinition):
-    def hasWon(self):
-        return self.game.chosenDoors[0] != self.game.rewardDoor
+class FirstDoorReward():
+    def hasWon(game):
+        return game.chosenDoors[0] == game.rewardDoor
 
-AllDefinitions = [RewardDoorSuccessDefinition, NonRewardDoorSuccessDefinition, FirstDoorRewardDoorSuccessDefinition, FirstDoorNonRewardDoorSuccessDefinition]
+
+class FirstDoorNonReward():
+    def hasWon(game):
+        return game.chosenDoors[0] != game.rewardDoor
+
+
+AllDefinitions = [RewardDoor, NonRewardDoor,
+                  FirstDoorReward, FirstDoorNonReward]
