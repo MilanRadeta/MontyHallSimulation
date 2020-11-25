@@ -186,8 +186,13 @@ And I wanted to share this Eureka moment.
 ## References
 
 https://www.montyhallproblem.com/
+
 https://statisticsbyjim.com/fun/monty-hall-problem/
+
 https://betterexplained.com/articles/understanding-the-monty-hall-problem/
+
 https://brilliant.org/wiki/monty-hall-problem/
+
 https://en.wikipedia.org/wiki/Monty_Hall_problem
+
 https://www.mathwarehouse.com/monty-hall-simulation-online/
