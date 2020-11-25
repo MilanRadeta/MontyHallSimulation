@@ -1,12 +1,14 @@
+from GameResult import GameResult
 import random
 from Door import Door
 
-class Doors(object):
-    def __init__(self, totalDoors, choiceStrategy, successDefinitions):
-        self.choiceStrategy = choiceStrategy(self)
-        self.successDefinitions = [d(self) for d in successDefinitions]
+
+class DoorsGame(object):
+    def __init__(self, config):
+        self.config = config
+        self.choiceStrategy = config.strategy(self)
         self.openDoors = []
-        self.doors = [Door(i) for i in range(totalDoors)]
+        self.doors = [Door(i) for i in range(config.totalDoors)]
         self.closedDoors = self.doors.copy()
         self.setRewardDoor()
         self.emptyDoors = [door for door in self.doors if not door.hasReward]
@@ -63,6 +65,5 @@ class Doors(object):
 
         self.openDoor(self.chosenDoor)
         self.openDoor(self.closedDoors[0])
-        
-        res = {definition.__class__.__name__: definition.hasWon() for definition in self.successDefinitions}
-        return res
+
+        return GameResult(self)
