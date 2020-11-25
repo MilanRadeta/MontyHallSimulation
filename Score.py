@@ -31,6 +31,7 @@ class Score(object):
                           1 if score[definition] else 0)
 
     def printSingleScore(self, scores, totalTries):
+        print('PROBABILITIES')
         data = {}
         for (strategy, definitions) in scores.items():
             data[strategy] = {}
