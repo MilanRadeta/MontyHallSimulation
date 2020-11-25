@@ -25,11 +25,10 @@ class Simulator(object):
             for numberOfDoors in self.totalDoors:
                 data[numberOfDoors] = {}
                 for numOfTries in self.totalTries:
-                    wins = Simulator.simulate(
-                        numOfTries, numberOfDoors, choiceStrategy)
+                    wins = Simulator.simulate(numOfTries, numberOfDoors, choiceStrategy)
                     data[numberOfDoors][
                         numOfTries] = f'{round(wins/numOfTries * 100, 2)}%'
             print()
-            print(choiceStrategy)
+            print(choiceStrategy.__name__)
             print(pandas.DataFrame(data))
             print()

@@ -1,11 +1,9 @@
 import random
 from Door import Door
-from ChoiceStrategy import ChoiceStrategy
-
 
 class Doors(object):
     def __init__(self, totalDoors, choiceStrategy):
-        self.choiceStrategy = choiceStrategy
+        self.choiceStrategy = choiceStrategy(self)
         self.openDoors = []
         self.doors = [Door(i) for i in range(totalDoors)]
         self.closedDoors = self.doors.copy()
@@ -44,19 +42,8 @@ class Doors(object):
 
     def chooseDoor(self, index=None):
         if index is None:
-            if self.choiceStrategy == ChoiceStrategy.RANDOM:
-                self.chosenDoor = random.choice(self.closedDoors)
-                return
-
-            if self.choiceStrategy == ChoiceStrategy.KEEP:
-                if self.chosenDoor is None:
-                    self.chosenDoor = random.choice(self.closedDoors)
-                return
-
-            if self.choiceStrategy == ChoiceStrategy.SWITCH:
-                self.chosenDoor = random.choice(
-                    [door for door in self.closedDoors if door != self.chosenDoor])
-                return
+            self.chosenDoor = self.choiceStrategy.chooseDoor()
+            return
 
         if index >= len(self.doors) or index < 0:
             raise ValueError('Chosen door does not exist')
