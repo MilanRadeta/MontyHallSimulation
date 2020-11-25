@@ -2,11 +2,10 @@ import random
 
 class ChoiceStrategy(object):
     def __init__(self, game):
-        self.name = self.__class__.__name__
         self.game = game
     
     def __str__(self):
-        return self.name
+        return self.__class__.__name__
 
 class RandomStrategy(ChoiceStrategy):
     def chooseDoor(self):
