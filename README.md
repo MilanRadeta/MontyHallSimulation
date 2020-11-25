@@ -108,14 +108,19 @@ The SWITCH strategy is interesting because it keeps the 2/3 chance even with mul
     <th>10</th>
   </tr>
   <tr>
-    <th>10</th>
+    <th>10</th><td>50.0%</td><td>20.0%</td><td>40.0%</td>
   </tr>
   <tr>
-    <th>10     </th><td> 50.0%</td><td>   20.0%</td><td>   40.0%</td>
-    <th>100    </th><td> 50.0%</td><td>   46.0%</td><td>   51.0%</td>
-    <th>1000   </th><td> 50.3%</td><td>   50.5%</td><td>   53.8%</td>
-    <th>10000  </th><td>50.96%</td><td>  49.91%</td><td>   49.7%</td>
-    <th>100000 </th><td>49.83%</td><td>  50.18%</td><td>  49.86%</td>
+    <th>100</th><td>50.0%</td><td>46.0%</td><td>51.0%</td>
+  </tr>
+  <tr>
+    <th>1000</th><td> 50.3%</td><td>50.5%</td><td>53.8%</td>
+  </tr>
+  <tr>
+    <th>10000</th><td>50.96%</td><td>49.91%</td><td>49.7%</td>
+  </tr>
+  <tr>
+    <th>100000</th><td>49.83%</td><td>50.18%</td><td>49.86%</td>
   </tr>
 </table>
 
@@ -129,13 +134,18 @@ The SWITCH strategy is interesting because it keeps the 2/3 chance even with mul
     <th>10</th>
   </tr>
   <tr>
-    <th>10</th>
+    <th>10     </th><td>  20.0%</td><td>   10.0%</td><td>  10.0%</td>
   </tr>
   <tr>
-    <th>10     </th><td>  20.0%</td><td>   10.0%</td><td>  10.0%</td>
     <th>100    </th><td>  31.0%</td><td>   22.0%</td><td>   8.0%</td>
+  </tr>
+  <tr>
     <th>1000   </th><td>  34.4%</td><td>   21.0%</td><td>   9.9%</td>
+  </tr>
+  <tr>
     <th>10000  </th><td>  33.06%</td><td>  20.36%</td><td>  9.78%</td>
+  </tr>
+  <tr>
     <th>100000 </th><td>  33.17%</td><td>  20.06%</td><td>  9.98%</td>
   </tr>
 </table>
@@ -149,13 +159,18 @@ The SWITCH strategy is interesting because it keeps the 2/3 chance even with mul
     <th>10</th>
   </tr>
   <tr>
-    <th>10</th>
+    <th>10      </th><td> 40.0%  </td><td> 60.0%</td><td>   70.0%</td>
   </tr>
   <tr>
-    <th>10      </th><td> 40.0%  </td><td> 60.0%</td><td>   70.0%</td>
     <th>100     </th><td> 77.0%  </td><td> 66.0%</td><td>   55.0%</td>
+  </tr>
+  <tr>
     <th>1000    </th><td> 67.7%  </td><td> 62.5%</td><td>   63.7%</td>
+  </tr>
+  <tr>
     <th>10000   </th><td> 66.7%  </td><td>62.93%</td><td>  63.01%</td>
+  </tr>
+  <tr>
     <th>100000  </th><td>66.43%  </td><td>63.36%</td><td>  63.08%</td>
   </tr>
 </table>
