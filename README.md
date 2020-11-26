@@ -92,7 +92,7 @@ There are four choice strategies:
 * Random
 * Keep
 * Switch
-* OneSwitch
+* Switch Once
 
 ### Random
 
@@ -108,30 +108,82 @@ The results calculated using this strategy indicate there's a 1/N chance to win.
 And as far as the simulation is "concerned", those two situations are not different.  
 Therefore, only the *illusion of choice* is present.
 
-### Switch
+### Switch 
 
 Switch Choice Strategy *always changes the chosen door*.  
-However, that does not mean 
-The results calculated using this strategy indicate there's a 1/3 chance to win.  
+
+In case of N > 3, after opening each door without the reward, contestant switches the doors.  
+Therefore, where N is number of all doors and X is number of opened doors, the contestant subsequently chooses one of N-X-1 doors.  
+This differs from the first choice, where the contestant can choose any door.  
+
+Like Random Choice Strategy, the next door chosen *may or may not* belong in the group of previously chosen doors.  
+Unline Random Choice Strategy and like Switch Once Strategy, the next door must not be the same as the last selected door.  
+
+This strategy differs from Switch Once strategy for N > 3, but works the same for egde case of N = 3.  
+
+There's no illusion of choice in this strategy, since contestant must randomly choose between the remaining doors.
+We can't say that the contestant can switch back and forth between two doors, since it's possible for that one of those two doors open during the game.
+
+The results for this strategy are quite unique and I haven't seen them in other simulations. 
+
+#### True Switch results
+
+The results for Switch Strategy and Reward Door DoS tend to 60% chance.  
+Don't take my word for it, but I have a theory that that chance can be calculated the following way:  
+`( (N-1) / N + (2/N) / N ) / 2`
+where (N-1) and 2 are max and min different doors selected during the game, respectively.
+I might test this theory later on and post the results.
+
+### Switch Once
+
+Switch Once Strategy *always changes the chosen door, but only when there are two doors remaining*.
+The results calculated using this strategy indicate there's a (N-1)/N chance to win.  
 *That chance is the same as if the contestant was never given the second choice.*  
 And as far as the simulation is "concerned", those two situations are not different.  
-Therefore, only the *illusion of choice* is present.
+Therefore, only the *illusion of choice* is present.  
 
+This strategy differs from Switch strategy for N > 3, but works the same for egde case of N = 3.  
 
+## Definitions of Success
 
+In order to confirm the correlation between chance values, the existence of illusion of choice some strategies, I had to perceive the goal of the game from different perspective to find the same hidden chance values.  
 
+Therefore, I created 4 DoS:
+* CarDoor
+* GoatDoor
+* InitCarDoor
+* InitGoatDoor
 
+Some of these DoSs might seem counter-intuitive and illogical, but so do the chances of winning the game by switching the doors.
 
-Available online simulations rocked my foundations quite a bit when I saw the results being 1/3 and 2/3.  
-They really made me question my sanity and knowledge.  
-But, as I said, then I figured out that the simulations only cover two strategies: ALWAYS Keep and ALWAYS Switch.  
-They didn't cover SOMETIMES Keep and SOMETIMES Switch.
+### Car Door
 
-That said, the results are correct, just not for the question "Will switching increase my chances?".  
-The question that should be asked for those answers to be correct "What are the chances for one door to hold the reward and what are the chances for one door to NOT hold the reward at the beginning of the game?"
+This is the standard, most intuitive and logical DoS.  
+It represents the contestant's wish to choose the door with the reward (car) at the end of the game.  
 
-Imagine that the contestant wasn't asked to choose the door that he/she thinks holds the reward, but opposite: "Choose the door that doesn't hold the reward."  
-Then the results make sense. By always switching the door, you always choose the first door like it doesn't have the reward. And the chance for that actually is 2/3
+### Goat Door
+
+This is the opposite of the Reward Door DoS and one of the more counter-intuitive ones.
+It represents the contestant's wish to choose the door which doesn't have the reward at the end of the game.
+Imagine a contestant which actually wants a goat.
+
+### InitCarDoor
+
+This is similar to Car Door DoS but it only cares for the first chosen door.
+It represents the contestant's wish to choose the door with the reward (car) at the beginning of the game, but not at the end.
+Imagine a contestant that will be happy to know that he did it right on the first try.
+Like InitGoatDoor, the chance for success is the same regardless of the strategy.
+The chance for success is the same as if the user only had one choice and wanted to get the car: 1/N
+You'll notice in the results there's a link between this DoS and Keep CS.
+
+### InitGoatDoor
+
+This is similar to Goat Door DoS but it only cares for the first chosen door.
+It represents the contestant's wish to choose the door which doesn't have the reward at the beginning of the game, but not at the end.
+Imagine a contestant that will be happy to know that the first chosen door didn't have the reward.
+Like InitCarDoor, the chance for success is the same regardless of the strategy.
+The chance for success is the same as if the user only had one choice and wanted to get the goat: (N-1)/N
+You'll notice in the results there's a link between this DoS and Switch CS.
 
 ## Results
 
