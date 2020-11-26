@@ -233,10 +233,11 @@ Key takeaways:
 ## Endnote
 
 As I already said in the beginning: I was bored and I couldn't sleep, so it's quite possible I'm not right.  
-But it has been bugging me for quite a while. And I wanted to share this Eureka moment.
-So I'm showing you the code, the data, relations and looks at the same problem from different perspectives.
+But it has been bugging me for quite a while. And I wanted to share this Eureka moment.  
+So I'm showing you the code, the data, relations and looks at the same problem from different perspectives.  
 
-In the future, I might add a couple of other CSs and DoSs and calculate the results.
+In the future, I might add a couple of other CSs and DoSs and calculate the results.  
+You are welcome to create issues for me if you have any advice, wishes, observations that might need addressing
 But I think the main goal has been achieved and I've shown that the chance is 50/50, after all. :)
 
 ## References
