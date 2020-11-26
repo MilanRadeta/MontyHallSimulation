@@ -22,19 +22,20 @@ I was bored. I couldn't sleep. And the reason I couldn't sleep was that I was no
 
 I'm one of those 50/50 guys. And I think I figured it out. So I decided to share my opinion, analysis and results to prove that 50/50 is the right answer and/or make a fool of myself.
 
-## Hypothesis - Choice vs The Illusion of Choice
+## Hypothesis - Choice vs the Illusion of Choice (IoC)
 
 Since the host opens one of remaining doors, a new independent situation occurs when contestant is offered to make the choice again.  
 Therefore, during the second choice, he only has two options, thus making the chances to win the reward 50/50.  
 
 The "Keep the same door strategy" makes sense to give 1/3 chance to win the reward.  
-It doesn't matter if host is gonna show you one of the remaining doors.  
+It doesn't matter if host is gonna show you one of the remaining doors - illusion of choice.  
 It's the same situation if you were only given one choice, just at the beginning of the game and that's it  
 Basically, 1/3 is the answer to the following question: "What's the chance for each door to have a reward behind it?"
 
 The "Switching the door strategy" makes sense to give 2/3 chance, but not to win the reward.  
 The 2/3 indicates the chance that the door you chose initially DOESN'T contain the reward.  
 So, in contrast to previous strategy, 2/3 is the answer to the following question: "What's the chance for each door to NOT have a reward behind it?"  
+It doesn't matter if host is gonna show you one of the remaining doors, you'll always switch - illusion of choice.  
 
 Therefore, I've created more than these two "strategies" in this simulation and specified different definitions of a successful choice.
 
@@ -121,7 +122,7 @@ Unline Random Choice Strategy and like Switch Once Strategy, the next door must 
 
 This strategy differs from Switch Once strategy for N > 3, but works the same for egde case of N = 3.  
 
-There's no illusion of choice in this strategy, since contestant must randomly choose between the remaining doors.
+There's no IoC in this strategy, since contestant must randomly choose between the remaining doors.
 We can't say that the contestant can switch back and forth between two doors, since it's possible for that one of those two doors open during the game.
 
 The results for this strategy are quite unique and I haven't seen them in other simulations. 
@@ -130,7 +131,7 @@ The results for this strategy are quite unique and I haven't seen them in other 
 
 The results for Switch Strategy and Reward Door DoS tend to 60% chance.  
 Don't take my word for it, but I have a theory that that chance can be calculated the following way:  
-`( (N-1) / N + (2/N) / N ) / 2`  
+`( (N-1) / N + (2/N) / N ) / 2 => (N+1) / 2N`  
 where (N-1) and 2 are max and min different doors selected during the game, respectively.  
 I might test this theory later on and post the results.
 
@@ -146,7 +147,7 @@ This strategy differs from Switch strategy for N > 3, but works the same for egd
 
 ## Definitions of Success
 
-In order to confirm the correlation between chance values, the existence of illusion of choice some strategies, I had to perceive the goal of the game from different perspective to find the same hidden chance values.  
+In order to confirm the correlation between chance values, the existence of IoC in some strategies, I had to perceive the goal of the game from different perspective to find the same hidden chance values.  
 
 Therefore, I created 4 DoS:
 * CarDoor
@@ -185,7 +186,7 @@ Like InitCarDoor, the chance for success is the same regardless of the strategy.
 The chance for success is the same as if the user only had one choice and wanted to get the goat: (N-1)/N  
 You'll notice in the results there's a link between this DoS and Switch CS.  
 
-## Results
+## Results and Analysis
 
 I ran the simulation for all CSs and DoSs, N=(3,5,10) and G=10^k where k = [1, 5].
 
@@ -198,13 +199,45 @@ The results are plotted in `output.pdf`.
 
 An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
 
-![Excerpt!](/excerpt.png)
+![Excerpt](/excerpt.PNG)
+
+Key takeaways:
+* CarDoor and GoatDoor
+** Random CS
+*** tends to have the values of 50%
+*** this strategy actually involves two choices
+*** these results actually confirm that the chances are 50/50
+*** these results do not vary when changing the number of doors
+** Switch and Switch Once
+*** for the edge case of N = 3, the values are the same, since the strategy is performed in the same way
+*** for N > 3 the results differ
+** Keep and Switch Once
+*** the two strategies are complementary
+*** is aligned with 1/N vs 2/N theory
+*** shows standard simulation results
+** Switch
+*** for N > 3 tends to 2/3 chance of success in terms of CarDoor DoS
+*** number of doors don't seem to affect the change in values
+*** possible formula: `(N+1) / 2N`
+* Initial doors
+** the results are pretty much the same regardless of the strategy
+** they tend to 1/N chance of success in terms of CarDoor DoS
+** takes into account only the first choice
+** relationship with Keep and Switch Once strategy with Car and Goat Door DoSs
+*** the values are basically the same, relationship is obvious
+*** questions whether the second choice matters - the illusion of choice
+*** questions whether the 'Always Switch' theory, because the simulation results are misinterpreted
+*** because of the IoC, to computer this is the same as if it was asked: "What's the chance of finding the goat on the first try?"
+
 
 ## Endnote
 
 As I already said in the beginning: I was bored and I couldn't sleep, so it's quite possible I'm not right.  
-But it has been bugging me for quite a while.  
-And I wanted to share this Eureka moment.
+But it has been bugging me for quite a while. And I wanted to share this Eureka moment.
+So I'm showing you the code, the data, relations and looks at the same problem from different perspectives.
+
+In the future, I might add a couple of other CSs and DoSs and calculate the results.
+But I think the main goal has been achieved and I've shown that the chance is 50/50, after all. :)
 
 ## References
 
