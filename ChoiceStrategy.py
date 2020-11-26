@@ -24,10 +24,10 @@ class Switch(ChoiceStrategy):
         return random.choice([door for door in self.game.closedDoors if door != self.game.chosenDoor])
 
 
-class OneSwitch(Switch):
+class SwitchOnce(Switch):
     def chooseDoor(self):
         return self.game.chosenDoor if (self.game.chosenDoor is not None and len(self.game.closedDoors) > 2) else Switch.chooseDoor(self)
 
 
 AllStrategies = [Random, Keep,
-                 Switch, OneSwitch]
+                 Switch, SwitchOnce]
