@@ -43,19 +43,19 @@ Therefore, I've created more than these two "strategies" in this simulation and 
 What happens when the number of doors is increased? According to existing simulation programs and explanations, the chance increases even more if contestant switches choices.  
 That means that for N doors, the chance to win the reward by switching is (N-1)/N, meaning pretty close to 100% for large N.  
 
-However, in case of N > 3, there are two ways to opening the remaining doors:
-1) after opening each door, offer contestant another choice
-2) open all doors except the chosen door and one that may or may not have the reward and then offer the contestant the second choice
+However, in case of N > 3, there are two ways to opening the remaining doors:  
+a) after opening each door, offer contestant another choice  
+b) open all doors except the chosen door and one that may or may not have the reward and then offer the contestant the second choice  
 
-That being said, if we stick to 1), the contestant can:
-a) switch the choice each time
-b) keep the choice until there are only 2 doors left
+That being said, if we stick to 1), the contestant can:  
+c) switch the choice each time  
+c) keep the choice until there are only 2 doors left  
 
-Keeping the illusion of choice in mind:
-* 1) is the same as a)
-* 2) is the same as b)
+Keeping the illusion of choice in mind:  
+a) is the same as c)  
+b) is the same as d)  
 
-In egde case of N = 3, all 4 ways are the same: 1), 2), a), b).  
+In egde case of N = 3, all 4 ways are the same: a, b, c and d
 But the edge case exists and because of that the existing simulation results might have been misinterpreted.
 
 ## Simulation Program - Overview
@@ -130,8 +130,8 @@ The results for this strategy are quite unique and I haven't seen them in other 
 
 The results for Switch Strategy and Reward Door DoS tend to 60% chance.  
 Don't take my word for it, but I have a theory that that chance can be calculated the following way:  
-`( (N-1) / N + (2/N) / N ) / 2`
-where (N-1) and 2 are max and min different doors selected during the game, respectively.
+`( (N-1) / N + (2/N) / N ) / 2`  
+where (N-1) and 2 are max and min different doors selected during the game, respectively.  
 I might test this theory later on and post the results.
 
 ### Switch Once
@@ -198,7 +198,7 @@ The results are plotted in `output.pdf`.
 
 An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
 
-
+![Excerpt!](/excerpt.png)
 
 ## Endnote
 
