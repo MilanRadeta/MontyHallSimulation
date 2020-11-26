@@ -11,15 +11,14 @@ class Simulator(object):
         self.currentConfig = Config()
         self.currentConfig.successDefinitions = self.config.successDefinitions
 
-    def simulate(self, log=False):
-        if log:
-            print(
-                f'Running simulation for {self.currentConfig}')
+    def simulate(self):
+        print(f'Running simulation for {self.currentConfig}...')
         for i in range(self.currentConfig.totalTries):
             result = DoorsGame(self.currentConfig).runGame()
             self.score.update(result, self.currentConfig)
 
     def run(self):
+        print(f'Running simulator...')
         self.score.reset()
         for totalTries in self.config.totalTries:
             for totalDoors in self.config.totalDoors:
@@ -30,3 +29,4 @@ class Simulator(object):
 
                     self.simulate()
                 self.score.printByConfig(self.currentConfig)
+        self.score.plotAll()
