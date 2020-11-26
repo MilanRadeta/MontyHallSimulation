@@ -203,31 +203,31 @@ An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
 
 Key takeaways:
 * CarDoor and GoatDoor
-** Random CS
-*** tends to have the values of 50%
-*** this strategy actually involves two choices
-*** these results actually confirm that the chances are 50/50
-*** these results do not vary when changing the number of doors
-** Switch and Switch Once
-*** for the edge case of N = 3, the values are the same, since the strategy is performed in the same way
-*** for N > 3 the results differ
-** Keep and Switch Once
-*** the two strategies are complementary
-*** is aligned with 1/N vs 2/N theory
-*** shows standard simulation results
-** Switch
-*** for N > 3 tends to 2/3 chance of success in terms of CarDoor DoS
-*** number of doors don't seem to affect the change in values
-*** possible formula: `(N+1) / 2N`
+  * Random CS
+    * tends to have the values of 50%
+    * this strategy actually involves two choices
+    * these results actually confirm that the chances are 50/50
+    * these results do not vary when changing the number of doors
+  * Switch and Switch Once
+    * for the edge case of N = 3, the values are the same, since the strategy is performed in the same way
+    * for N > 3 the results differ
+  * Keep and Switch Once
+    * the two strategies are complementary
+    * is aligned with 1/N vs 2/N theory
+    * shows standard simulation results
+  * Switch
+    * for N > 3 tends to 2/3 chance of success in terms of CarDoor DoS
+    * number of doors don't seem to affect the change in values
+    * possible formula: `(N+1) / 2N`
 * Initial doors
-** the results are pretty much the same regardless of the strategy
-** they tend to 1/N chance of success in terms of CarDoor DoS
-** takes into account only the first choice
-** relationship with Keep and Switch Once strategy with Car and Goat Door DoSs
-*** the values are basically the same, relationship is obvious
-*** questions whether the second choice matters - the illusion of choice
-*** questions whether the 'Always Switch' theory, because the simulation results are misinterpreted
-*** because of the IoC, to computer this is the same as if it was asked: "What's the chance of finding the goat on the first try?"
+  * the results are pretty much the same regardless of the strategy
+  * they tend to 1/N chance of success in terms of CarDoor DoS
+  * takes into account only the first choice
+  * relationship with Keep and Switch Once strategy with Car and Goat Door DoSs
+    * the values are basically the same, relationship is obvious
+    * questions whether the second choice matters - the illusion of choice
+    * questions whether the 'Always Switch' theory, because the simulation results are misinterpreted
+    * because of the IoC, to computer this is the same as if it was asked: "What's the chance of finding the goat on the first try?"
 
 
 ## Endnote
