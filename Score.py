@@ -1,8 +1,14 @@
+from matplotlib.pyplot import ylabel
 import pandas
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 import seaborn as sns
 from ScoreItem import ScoreItem
 from Config import Config
+
+plt.rcParams['xtick.labelsize'] = plt.rcParams['ytick.labelsize'] = 10
+plt.rcParams['figure.figsize'] = (16, 16)
+plt.rcParams['figure.titlesize'] = 15
 
 
 class Score(object):
@@ -34,7 +40,6 @@ class Score(object):
                           1 if score[definition] else 0)
 
     def processScores(self, scores):
-        print('PROBABILITIES')
         data = {}
         for (strategy, definitions) in scores.items():
             data[strategy] = {}
@@ -44,7 +49,6 @@ class Score(object):
 
     def printScores(self, scores, config):
         print()
-        print('PROBABILITIES')
         print(f'Tries: {config.totalTries} | Doors: {config.totalDoors}')
         print(scores)
         print()
@@ -63,17 +67,37 @@ class Score(object):
         scores = self.processScores(scores)
         scores = pandas.DataFrame(scores)
         self.printScores(scores, config)
-        self.plotScores(scores, config)
 
-    def print(self):
-        for (totalTries, doors) in self.score.items():
-            print()
-            for totalDoors in doors:
-                config = Config()
-                config.totalTries = totalTries
-                config.totalDoors = totalDoors
-                self.printByConfig(config)
-            print()
+    def plotAll(self, outputFile='output.pdf'):
+        print(f'Plotting results...')
+        fig, axs = plt.subplots(len(self.config.totalTries),
+                                len(self.config.totalDoors),
+                                sharex=False, sharey=False,
+                                squeeze=False,
+                                gridspec_kw={"hspace": 1, "wspace": 1})
+        fig.suptitle('Probabilities')
+
+        row = 0
+        col = 0
+        for totalTries in self.config.totalTries:
+            col = 0
+            for totalDoors in self.config.totalDoors:
+                scores = self.score[totalTries][totalDoors]
+                scores = self.processScores(scores)
+                scores = pandas.DataFrame(scores)
+
+                ax = axs[row, col]
+                sns.heatmap(scores, ax=ax, annot=True)
+                ax.set_title(f'sims={totalTries}, doors={totalDoors}')
+
+                col += 1
+            row += 1
+
+        print(f'Saving to {outputFile}...')
+        pdf = PdfPages(outputFile)
+        pdf.savefig()
+        pdf.close()
+        print(f'Finished saving.')
 
     def __iter__(self):
         return self.score.__iter__()
