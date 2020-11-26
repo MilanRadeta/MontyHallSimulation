@@ -8,20 +8,20 @@ class RewardDoor(SuccessDefinition):
         return game.chosenDoor == game.rewardDoor
 
 
-class NonRewardDoor(SuccessDefinition):
+class NoRewardDoor(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoor != game.rewardDoor
 
 
-class FirstDoorReward(SuccessDefinition):
+class InitDoorReward(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoors[0] == game.rewardDoor
 
 
-class FirstDoorNonReward(SuccessDefinition):
+class InitDoorNoReward(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoors[0] != game.rewardDoor
 
 
-AllDefinitions = [RewardDoor, NonRewardDoor,
-                  FirstDoorReward, FirstDoorNonReward]
+AllDefinitions = [RewardDoor, NoRewardDoor,
+                  InitDoorReward, InitDoorNoReward]

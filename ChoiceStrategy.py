@@ -9,25 +9,25 @@ class ChoiceStrategy(object):
         return self.__class__.__name__
 
 
-class RandomStrategy(ChoiceStrategy):
+class Random(ChoiceStrategy):
     def chooseDoor(self):
         return random.choice(self.game.closedDoors)
 
 
-class KeepStrategy(RandomStrategy):
+class Keep(Random):
     def chooseDoor(self):
-        return self.game.chosenDoor or RandomStrategy.chooseDoor(self)
+        return self.game.chosenDoor or Random.chooseDoor(self)
 
 
-class SwitchStrategy(ChoiceStrategy):
+class Switch(ChoiceStrategy):
     def chooseDoor(self):
         return random.choice([door for door in self.game.closedDoors if door != self.game.chosenDoor])
 
 
-class KeepAndSwitchStrategy(SwitchStrategy):
+class OneSwitch(Switch):
     def chooseDoor(self):
-        return self.game.chosenDoor if (self.game.chosenDoor is not None and len(self.game.closedDoors) > 2) else SwitchStrategy.chooseDoor(self)
+        return self.game.chosenDoor if (self.game.chosenDoor is not None and len(self.game.closedDoors) > 2) else Switch.chooseDoor(self)
 
 
-AllStrategies = [RandomStrategy, KeepStrategy,
-                 SwitchStrategy, KeepAndSwitchStrategy]
+AllStrategies = [Random, Keep,
+                 Switch, OneSwitch]
