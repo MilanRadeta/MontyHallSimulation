@@ -154,7 +154,7 @@ Therefore, I created 4 DoS:
 * InitCarDoor
 * InitGoatDoor
 
-Some of these DoSs might seem counter-intuitive and illogical, but so do the chances of winning the game by switching the doors.
+Some of these DoSs might seem counter-intuitive and illogical, but so do the chances of winning the game by switching the doors.  
 
 ### Car Door
 
@@ -163,120 +163,42 @@ It represents the contestant's wish to choose the door with the reward (car) at 
 
 ### Goat Door
 
-This is the opposite of the Reward Door DoS and one of the more counter-intuitive ones.
-It represents the contestant's wish to choose the door which doesn't have the reward at the end of the game.
-Imagine a contestant which actually wants a goat.
+This is the opposite of the Reward Door DoS and one of the more counter-intuitive ones.  
+It represents the contestant's wish to choose the door which doesn't have the reward at the end of the game.  
+Imagine a contestant which actually wants a goat.  
 
 ### InitCarDoor
 
-This is similar to Car Door DoS but it only cares for the first chosen door.
-It represents the contestant's wish to choose the door with the reward (car) at the beginning of the game, but not at the end.
-Imagine a contestant that will be happy to know that he did it right on the first try.
-Like InitGoatDoor, the chance for success is the same regardless of the strategy.
-The chance for success is the same as if the user only had one choice and wanted to get the car: 1/N
-You'll notice in the results there's a link between this DoS and Keep CS.
+This is similar to Car Door DoS but it only cares for the first chosen door.  
+It represents the contestant's wish to choose the door with the reward (car) at the beginning of the game, but not at the end.  
+Imagine a contestant that will be happy to know that he did it right on the first try.  
+Like InitGoatDoor, the chance for success is the same regardless of the strategy.  
+The chance for success is the same as if the user only had one choice and wanted to get the car: 1/N  
+You'll notice in the results there's a link between this DoS and Keep CS.  
 
 ### InitGoatDoor
 
-This is similar to Goat Door DoS but it only cares for the first chosen door.
-It represents the contestant's wish to choose the door which doesn't have the reward at the beginning of the game, but not at the end.
-Imagine a contestant that will be happy to know that the first chosen door didn't have the reward.
-Like InitCarDoor, the chance for success is the same regardless of the strategy.
-The chance for success is the same as if the user only had one choice and wanted to get the goat: (N-1)/N
-You'll notice in the results there's a link between this DoS and Switch CS.
+This is similar to Goat Door DoS but it only cares for the first chosen door.  
+It represents the contestant's wish to choose the door which doesn't have the reward at the beginning of the game, but not at the end.  
+Imagine a contestant that will be happy to know that the first chosen door didn't have the reward.  
+Like InitCarDoor, the chance for success is the same regardless of the strategy.  
+The chance for success is the same as if the user only had one choice and wanted to get the goat: (N-1)/N  
+You'll notice in the results there's a link between this DoS and Switch CS.  
 
 ## Results
 
-I tested the simulation with all three strategies, multiple doors and with different number of simulations.  
-Below are three data frames (RANDOM, KEEP and SWITCH).  
-Column headers indicate the number of doors (3, 5, 10).  
-Row headers indicate the number of simulations/tries.
+I ran the simulation for all CSs and DoSs, N=(3,5,10) and G=10^k where k = [1, 5].
 
-As you can see, the RANDOM strategy, with greate number of tries, tends to result in 50% chance of winning.  
-The KEEP strategy is keeping the same chance from the beginning. As I already said, it doesn't matter if contestant is offered another choice if he/she's not going to use it.  
-The SWITCH strategy is interesting because it keeps the 2/3 chance even with multiple doors. However, the contestant switches each time after a new door opens.
+The reason why I chose N=(3,5,10) is because of the readable percentages:  
+* N=3, 1/N~=0.3, (N-1)~=0.6
+* N=5, 1/N=0.2, (N-1)=0.8
+* N=10, 1/N=0.1, (N-1)=0.9
 
-### ChoiceStrategy.RANDOM
-<table>
-  <tr>
-    <td></td>
-    <th>3</th>
-    <th>5</th>
-    <th>10</th>
-  </tr>
-  <tr>
-    <th>10</th><td>50.0%</td><td>20.0%</td><td>40.0%</td>
-  </tr>
-  <tr>
-    <th>100</th><td>50.0%</td><td>46.0%</td><td>51.0%</td>
-  </tr>
-  <tr>
-    <th>1000</th><td> 50.3%</td><td>50.5%</td><td>53.8%</td>
-  </tr>
-  <tr>
-    <th>10000</th><td>50.96%</td><td>49.91%</td><td>49.7%</td>
-  </tr>
-  <tr>
-    <th>100000</th><td>49.83%</td><td>50.18%</td><td>49.86%</td>
-  </tr>
-</table>
+The results are plotted in `output.pdf`.
+
+An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
 
 
-### ChoiceStrategy.KEEP
-<table>
-  <tr>
-    <td></td>
-    <th>3</th>
-    <th>5</th>
-    <th>10</th>
-  </tr>
-  <tr>
-    <th>10     </th><td>  20.0%</td><td>   10.0%</td><td>  10.0%</td>
-  </tr>
-  <tr>
-    <th>100    </th><td>  31.0%</td><td>   22.0%</td><td>   8.0%</td>
-  </tr>
-  <tr>
-    <th>1000   </th><td>  34.4%</td><td>   21.0%</td><td>   9.9%</td>
-  </tr>
-  <tr>
-    <th>10000  </th><td>  33.06%</td><td>  20.36%</td><td>  9.78%</td>
-  </tr>
-  <tr>
-    <th>100000 </th><td>  33.17%</td><td>  20.06%</td><td>  9.98%</td>
-  </tr>
-</table>
-
-### ChoiceStrategy.SWITCH
-<table>
-  <tr>
-    <td></td>
-    <th>3</th>
-    <th>5</th>
-    <th>10</th>
-  </tr>
-  <tr>
-    <th>10      </th><td> 40.0%  </td><td> 60.0%</td><td>   70.0%</td>
-  </tr>
-  <tr>
-    <th>100     </th><td> 77.0%  </td><td> 
-    
-    
-    
-    
-    
-    .0%</td><td>   55.0%</td>
-  </tr>
-  <tr>
-    <th>1000    </th><td> 67.7%  </td><td> 62.5%</td><td>   63.7%</td>
-  </tr>
-  <tr>
-    <th>10000   </th><td> 66.7%  </td><td>62.93%</td><td>  63.01%</td>
-  </tr>
-  <tr>
-    <th>100000  </th><td>66.43%  </td><td>63.36%</td><td>  63.08%</td>
-  </tr>
-</table>
 
 ## Endnote
 
