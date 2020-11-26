@@ -3,25 +3,25 @@ class SuccessDefinition():
         return False
 
 
-class RewardDoor(SuccessDefinition):
+class CarDoor(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoor == game.rewardDoor
 
 
-class NoRewardDoor(SuccessDefinition):
+class GoatDoor(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoor != game.rewardDoor
 
 
-class InitDoorReward(SuccessDefinition):
+class InitCarDoor(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoors[0] == game.rewardDoor
 
 
-class InitDoorNoReward(SuccessDefinition):
+class InitGoatDoor(SuccessDefinition):
     def hasWon(game):
         return game.chosenDoors[0] != game.rewardDoor
 
 
-AllDefinitions = [RewardDoor, NoRewardDoor,
-                  InitDoorReward, InitDoorNoReward]
+AllDefinitions = [CarDoor, GoatDoor,
+                  InitCarDoor, InitGoatDoor]
