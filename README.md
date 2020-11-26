@@ -237,7 +237,7 @@ But it has been bugging me for quite a while. And I wanted to share this Eureka 
 So I'm showing you the code, the data, relations and looks at the same problem from different perspectives.  
 
 In the future, I might add a couple of other CSs and DoSs and calculate the results.  
-You are welcome to create issues for me if you have any advice, wishes, observations that might need addressing
+You are welcome to create issues for me if you have any advice, wishes, observations that might need addressing.  
 But I think the main goal has been achieved and I've shown that the chance is 50/50, after all. :)
 
 ## References
