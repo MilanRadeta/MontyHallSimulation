@@ -92,7 +92,7 @@ There are four choice strategies:
 * Random
 * Keep
 * Switch
-* OneSwitch
+* Switch Once
 
 ### Random
 
@@ -108,123 +108,97 @@ The results calculated using this strategy indicate there's a 1/N chance to win.
 And as far as the simulation is "concerned", those two situations are not different.  
 Therefore, only the *illusion of choice* is present.
 
-### Switch
+### Switch 
 
 Switch Choice Strategy *always changes the chosen door*.  
-However, that does not mean 
-The results calculated using this strategy indicate there's a 1/3 chance to win.  
+
+In case of N > 3, after opening each door without the reward, contestant switches the doors.  
+Therefore, where N is number of all doors and X is number of opened doors, the contestant subsequently chooses one of N-X-1 doors.  
+This differs from the first choice, where the contestant can choose any door.  
+
+Like Random Choice Strategy, the next door chosen *may or may not* belong in the group of previously chosen doors.  
+Unline Random Choice Strategy and like Switch Once Strategy, the next door must not be the same as the last selected door.  
+
+This strategy differs from Switch Once strategy for N > 3, but works the same for egde case of N = 3.  
+
+There's no illusion of choice in this strategy, since contestant must randomly choose between the remaining doors.
+We can't say that the contestant can switch back and forth between two doors, since it's possible for that one of those two doors open during the game.
+
+The results for this strategy are quite unique and I haven't seen them in other simulations. 
+
+#### True Switch results
+
+The results for Switch Strategy and Reward Door DoS tend to 60% chance.  
+Don't take my word for it, but I have a theory that that chance can be calculated the following way:  
+`( (N-1) / N + (2/N) / N ) / 2`
+where (N-1) and 2 are max and min different doors selected during the game, respectively.
+I might test this theory later on and post the results.
+
+### Switch Once
+
+Switch Once Strategy *always changes the chosen door, but only when there are two doors remaining*.
+The results calculated using this strategy indicate there's a (N-1)/N chance to win.  
 *That chance is the same as if the contestant was never given the second choice.*  
 And as far as the simulation is "concerned", those two situations are not different.  
-Therefore, only the *illusion of choice* is present.
+Therefore, only the *illusion of choice* is present.  
 
+This strategy differs from Switch strategy for N > 3, but works the same for egde case of N = 3.  
 
+## Definitions of Success
 
+In order to confirm the correlation between chance values, the existence of illusion of choice some strategies, I had to perceive the goal of the game from different perspective to find the same hidden chance values.  
 
+Therefore, I created 4 DoS:
+* CarDoor
+* GoatDoor
+* InitCarDoor
+* InitGoatDoor
 
+Some of these DoSs might seem counter-intuitive and illogical, but so do the chances of winning the game by switching the doors.  
 
-Available online simulations rocked my foundations quite a bit when I saw the results being 1/3 and 2/3.  
-They really made me question my sanity and knowledge.  
-But, as I said, then I figured out that the simulations only cover two strategies: ALWAYS Keep and ALWAYS Switch.  
-They didn't cover SOMETIMES Keep and SOMETIMES Switch.
+### Car Door
 
-That said, the results are correct, just not for the question "Will switching increase my chances?".  
-The question that should be asked for those answers to be correct "What are the chances for one door to hold the reward and what are the chances for one door to NOT hold the reward at the beginning of the game?"
+This is the standard, most intuitive and logical DoS.  
+It represents the contestant's wish to choose the door with the reward (car) at the end of the game.  
 
-Imagine that the contestant wasn't asked to choose the door that he/she thinks holds the reward, but opposite: "Choose the door that doesn't hold the reward."  
-Then the results make sense. By always switching the door, you always choose the first door like it doesn't have the reward. And the chance for that actually is 2/3
+### Goat Door
+
+This is the opposite of the Reward Door DoS and one of the more counter-intuitive ones.  
+It represents the contestant's wish to choose the door which doesn't have the reward at the end of the game.  
+Imagine a contestant which actually wants a goat.  
+
+### InitCarDoor
+
+This is similar to Car Door DoS but it only cares for the first chosen door.  
+It represents the contestant's wish to choose the door with the reward (car) at the beginning of the game, but not at the end.  
+Imagine a contestant that will be happy to know that he did it right on the first try.  
+Like InitGoatDoor, the chance for success is the same regardless of the strategy.  
+The chance for success is the same as if the user only had one choice and wanted to get the car: 1/N  
+You'll notice in the results there's a link between this DoS and Keep CS.  
+
+### InitGoatDoor
+
+This is similar to Goat Door DoS but it only cares for the first chosen door.  
+It represents the contestant's wish to choose the door which doesn't have the reward at the beginning of the game, but not at the end.  
+Imagine a contestant that will be happy to know that the first chosen door didn't have the reward.  
+Like InitCarDoor, the chance for success is the same regardless of the strategy.  
+The chance for success is the same as if the user only had one choice and wanted to get the goat: (N-1)/N  
+You'll notice in the results there's a link between this DoS and Switch CS.  
 
 ## Results
 
-I tested the simulation with all three strategies, multiple doors and with different number of simulations.  
-Below are three data frames (RANDOM, KEEP and SWITCH).  
-Column headers indicate the number of doors (3, 5, 10).  
-Row headers indicate the number of simulations/tries.
+I ran the simulation for all CSs and DoSs, N=(3,5,10) and G=10^k where k = [1, 5].
 
-As you can see, the RANDOM strategy, with greate number of tries, tends to result in 50% chance of winning.  
-The KEEP strategy is keeping the same chance from the beginning. As I already said, it doesn't matter if contestant is offered another choice if he/she's not going to use it.  
-The SWITCH strategy is interesting because it keeps the 2/3 chance even with multiple doors. However, the contestant switches each time after a new door opens.
+The reason why I chose N=(3,5,10) is because of the readable percentages:  
+* N=3, 1/N~=0.3, (N-1)~=0.6
+* N=5, 1/N=0.2, (N-1)=0.8
+* N=10, 1/N=0.1, (N-1)=0.9
 
-### ChoiceStrategy.RANDOM
-<table>
-  <tr>
-    <td></td>
-    <th>3</th>
-    <th>5</th>
-    <th>10</th>
-  </tr>
-  <tr>
-    <th>10</th><td>50.0%</td><td>20.0%</td><td>40.0%</td>
-  </tr>
-  <tr>
-    <th>100</th><td>50.0%</td><td>46.0%</td><td>51.0%</td>
-  </tr>
-  <tr>
-    <th>1000</th><td> 50.3%</td><td>50.5%</td><td>53.8%</td>
-  </tr>
-  <tr>
-    <th>10000</th><td>50.96%</td><td>49.91%</td><td>49.7%</td>
-  </tr>
-  <tr>
-    <th>100000</th><td>49.83%</td><td>50.18%</td><td>49.86%</td>
-  </tr>
-</table>
+The results are plotted in `output.pdf`.
+
+An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
 
 
-### ChoiceStrategy.KEEP
-<table>
-  <tr>
-    <td></td>
-    <th>3</th>
-    <th>5</th>
-    <th>10</th>
-  </tr>
-  <tr>
-    <th>10     </th><td>  20.0%</td><td>   10.0%</td><td>  10.0%</td>
-  </tr>
-  <tr>
-    <th>100    </th><td>  31.0%</td><td>   22.0%</td><td>   8.0%</td>
-  </tr>
-  <tr>
-    <th>1000   </th><td>  34.4%</td><td>   21.0%</td><td>   9.9%</td>
-  </tr>
-  <tr>
-    <th>10000  </th><td>  33.06%</td><td>  20.36%</td><td>  9.78%</td>
-  </tr>
-  <tr>
-    <th>100000 </th><td>  33.17%</td><td>  20.06%</td><td>  9.98%</td>
-  </tr>
-</table>
-
-### ChoiceStrategy.SWITCH
-<table>
-  <tr>
-    <td></td>
-    <th>3</th>
-    <th>5</th>
-    <th>10</th>
-  </tr>
-  <tr>
-    <th>10      </th><td> 40.0%  </td><td> 60.0%</td><td>   70.0%</td>
-  </tr>
-  <tr>
-    <th>100     </th><td> 77.0%  </td><td> 
-    
-    
-    
-    
-    
-    .0%</td><td>   55.0%</td>
-  </tr>
-  <tr>
-    <th>1000    </th><td> 67.7%  </td><td> 62.5%</td><td>   63.7%</td>
-  </tr>
-  <tr>
-    <th>10000   </th><td> 66.7%  </td><td>62.93%</td><td>  63.01%</td>
-  </tr>
-  <tr>
-    <th>100000  </th><td>66.43%  </td><td>63.36%</td><td>  63.08%</td>
-  </tr>
-</table>
 
 ## Endnote
 
