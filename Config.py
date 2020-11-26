@@ -7,4 +7,4 @@ class Config(object):
         self.successDefinitions = None
 
     def __str__(self):
-        return f'<strategy={self.strategy}, totalDoors={self.totalDoors}, totalTries={self.totalTries}, successDefinitions={self.successDefinitions}>'
+        return f'<strategy={self.strategy.__name__}, totalDoors={self.totalDoors}, totalTries={self.totalTries}>'
