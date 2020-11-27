@@ -8,8 +8,7 @@ class Simulator(object):
     def __init__(self, config: Config):
         self.config = config
         self.score = Score(config)
-        self.currentConfig = Config()
-        self.currentConfig.successDefinitions = self.config.successDefinitions
+        self.currentConfig = Config(config)
 
     def simulate(self):
         print(f'Running simulation for {self.currentConfig}...')
