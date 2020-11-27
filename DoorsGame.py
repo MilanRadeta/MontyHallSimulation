@@ -8,6 +8,8 @@ from Door import Door
 class DoorsGame(object):
     def __init__(self, config: Config):
         self.config = config
+        self.initChoiceStrategy: ChoiceStrategy = config.initChoiceStrategy(self)
+        self.openingStrategy: ChoiceStrategy = config.openingStrategy(self)
         self.choiceStrategy: ChoiceStrategy = config.strategy(self)
         self.openDoors = []
         self.doors = [Door(i) for i in range(config.totalDoors)]
@@ -34,8 +36,8 @@ class DoorsGame(object):
         self.rewardDoor = self.getRandomClosedDoor()
         self.rewardDoor.hasReward = True
 
-    def openClosedEmptyDoor(self):
-        door = self.getRandomEmptyClosedDoor()
+    def openNextDoor(self):
+        door = self.openingStrategy.chooseDoor()
         self.openDoor(door)
 
     def openDoor(self, door: Door):
@@ -48,7 +50,8 @@ class DoorsGame(object):
 
     def chooseDoor(self, index=None):
         if index is None:
-            self.chosenDoor = self.choiceStrategy.chooseDoor()
+            strategy = self.initChoiceStrategy if self.chosenDoor is None else self.choiceStrategy
+            self.chosenDoor = strategy.chooseDoor()
             self.chosenDoors.append(self.chosenDoor)
             return
 
@@ -62,7 +65,7 @@ class DoorsGame(object):
     def runGame(self):
         self.chooseDoor()
         while(len(self.closedDoors) > 2):
-            self.openClosedEmptyDoor()
+            self.openNextDoor()
             self.chooseDoor()
 
         self.openDoor(self.chosenDoor)
