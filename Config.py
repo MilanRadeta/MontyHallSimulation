@@ -1,5 +1,4 @@
-from numpy.lib.arraysetops import isin
-from ChoiceStrategy import Random, RandomClosed
+from ChoiceStrategy import Random, RandomClosedOrReward, RandomNonChosenEmptyClosed
 
 
 class Config(object):
@@ -9,7 +8,8 @@ class Config(object):
         self.totalDoors = None
         self.totalTries = None
 
-        self.openingStrategy = RandomClosed
+        self.openingStrategy = RandomNonChosenEmptyClosed
+        self.positioningStrategy = RandomClosedOrReward
         self.initChoiceStrategy = Random
         self.successDefinitions = None
 
@@ -17,11 +17,11 @@ class Config(object):
             self.__dict__.update(config.__dict__.items())
 
     def getPrioritizedProps(self):
-        return [self.initChoiceStrategy, self.totalTries,
+        return [self.positioningStrategy, self.initChoiceStrategy, self.totalTries,
                 self.totalDoors, self.strategy, self.successDefinitions]
 
     def getPrioritizedPropKeys(self):
-        return ["initChoiceStrategy", "totalTries", "totalDoors", "strategy", "successDefinitions"]
+        return ["positioningStrategy", "initChoiceStrategy", "totalTries", "totalDoors", "strategy", "successDefinitions"]
 
     def getSubconfigs(self, depth):
         res = [self]
