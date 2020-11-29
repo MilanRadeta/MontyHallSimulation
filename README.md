@@ -1,4 +1,4 @@
-# Monty Hall Simulation - Fifty Fifty
+# Monty Hall Simulation
 
 Monty Hall simulation made in Python.  
 The goal of developing this project is to explore whether the results of the existing simulation programs are wrongly interpreted.  
@@ -18,24 +18,26 @@ For more info, check the references below or ask Google.
 
 ## Why another Monty Hall simulation?
 
-I was bored. I couldn't sleep. And the reason I couldn't sleep was that I was not satisfied with the answer that "switching to another door will increase your chances". The existing simulation programs are interpreted as that if you keep switching your choice, you'll get the reward in 2/3 of the time.  
+I was bored. I couldn't sleep. And the reason I couldn't sleep was that I was not satisfied with the answer that "switching to another door will increase your chances" and the existing explanations seemed a little fuzzy. The existing simulation programs are interpreted as that if you keep switching your choice, you'll get the reward in 2/3 of the time.  
 
-I'm one of those 50/50 guys. And I think I figured it out. So I decided to share my opinion, analysis and results to prove that 50/50 is the right answer and/or make a fool of myself.
+I was one of those 50/50 guys. And I thought I figured it out. So I decided to share my opinion, analysis and results to prove that 50/50 is the right answer and/or make a fool of myself. I did the latter, learnt something and now am just giving another look at the problem and its solution.
 
-## Hypothesis - Choice vs the Illusion of Choice (IoC)
+## Hypothesis - Choice vs the Illusion of (Second) Choice (IoC)
 
-Since the host opens one of remaining doors, a new independent situation occurs when contestant is offered to make the choice again.  
-Therefore, during the second choice, he only has two options, thus making the chances to win the reward 50/50.  
+Since the host opens one of remaining doors, the are two ways of looking at the new situation when the contestant is offered to make the choice again:
+* it's a new independent situation, where choice does not take into account the chances of previous situation, and making the chances to win the reward 50/50, if the contestant again randomly decides between the doors
+* it's the same situation as before, but the contestant is now choosing between 1 door and all of the remaining doors, not 1 of 3 doors
 
-The "Keep the same door strategy" makes sense to give 1/3 chance to win the reward.  
+The "Keep the same door strategy" says there's a 1/3 chance to win the reward.  
 It doesn't matter if host is gonna show you one of the remaining doors - illusion of choice.  
 It's the same situation if you were only given one choice, just at the beginning of the game and that's it  
 Basically, 1/3 is the answer to the following question: "What's the chance for each door to have a reward behind it?"
 
-The "Switching the door strategy" makes sense to give 2/3 chance, but not to win the reward.  
-The 2/3 indicates the chance that the door you chose initially DOESN'T contain the reward.  
-So, in contrast to previous strategy, 2/3 is the answer to the following question: "What's the chance for each door to NOT have a reward behind it?"  
+The "Switching the door strategy" says there's a 2/3 chance to win the reward.  
 It doesn't matter if host is gonna show you one of the remaining doors, you'll always switch - illusion of choice.  
+The 2/3 also indicates the chance that the door you chose initially DOESN'T contain the reward.  
+So, in contrast to previous strategy, 2/3 is the answer to the following question: "What's the chance for each door to NOT have a reward behind it?"  
+It also indicates the chance that the reward is somewhere in the whole group of remaining doors. So when you switch, you're actually choosing the whole other group of doors, not just one door. It's just that in that group only one door is left closed when you decided to switch and this explanation works when the total number of doors is 3.  
 
 Therefore, I've created more than these two "strategies" in this simulation and specified different definitions of a successful choice.
 
@@ -57,7 +59,6 @@ a) is the same as c)
 b) is the same as d)  
 
 In egde case of N = 3, all 4 ways are the same: a, b, c and d
-But the edge case exists and because of that the existing simulation results might have been misinterpreted.
 
 ## Simulation Program - Overview
 
@@ -123,11 +124,7 @@ Unline Random Choice Strategy and like Switch Once Strategy, the next door must 
 This strategy differs from Switch Once strategy for N > 3, but works the same for egde case of N = 3.  
 
 There's no IoC in this strategy, since contestant must randomly choose between the remaining doors.
-We can't say that the contestant can switch back and forth between two doors, since it's possible for that one of those two doors open during the game.
-
-The results for this strategy are quite unique and I haven't seen them in other simulations. 
-
-#### True Switch results
+We can't say that the contestant can switch back and forth between two doors, since it's possible for that one of those two doors open during the game.  
 
 The results for Switch Strategy and Reward Door DoS tend to 2/3 chance.  
 This is because that in case of using this strategy, the result is not dependent on N, and is actually reverting back to edge case of N=3.
@@ -203,12 +200,12 @@ An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
 #### Last Chosen Door - CarDoor and GoatDoor
 ##### Random CS
 50% chance of success in terms of CarDoor DoS.
-Actually involves two choices.  
+Actually involves two choices, where the second choice is independent of the previous one.  
 The results actually confirm that the chances are 50/50.  
 These results do not vary when changing the number of doors.
 ##### Switch and Switch Once
 For the edge case of N = 3, the values are the same, since the strategy is performed in the same way.  
-For N > 3 the results differ.  
+For N > 3 the results differ, but the Switch strategy reverts back to situation where N = 3.  
 ##### Keep and Switch Once
 The two strategies are complementary.  
 Aligns with 1/N vs 2/N theory.  
@@ -223,18 +220,21 @@ Takes into account only the first choice.
 ##### Relationship with Keep and Switch Once strategy with Car and Goat Door DoSs
 The values are the same, relationship is obvious.  
 Questions whether the second choice matters - the illusion of choice.  
-Questions whether the 'Always Switch' theory, because the simulation results are misinterpreted  
-Because of the IoC, to computer this is the same as if it was asked: "What's the chance of finding the goat on the first try?"
+Because of the IoC, to computer this is the same as if it was asked: "What's the chance of finding the goat on the first try?"  
+If there's a high chance of that, if offered to switch contestant would like to avoid the goat.
 
 ## Endnote
 
-As I already said in the beginning: I was bored and I couldn't sleep, so it's quite possible I'm not right.  
-But it has been bugging me for quite a while. And I wanted to share this Eureka moment.  
+As I already said in the beginning: I was bored and I couldn't sleep, and I was aware at the time that I might had gone on a fool's errand.
+But it had been bugging me for quite a while and I wanted to share the eureka moment when I found the connection between different CSs and DoSs.  
 So I'm showing you the code, the data, relations and looks at the same problem from different perspectives.  
 
 In the future, I might add a couple of other CSs and DoSs and calculate the results.  
 You are welcome to create issues for me if you have any advice, wishes, observations that might need addressing.  
-But I think the main goal has been achieved and I've shown that the chance is 50/50, after all. :)
+~~But I think the main goal has been achieved and I've shown that the chance is 50/50, after all. :)~~  
+The chance is 50/50, if you randomly choose between the remaining two doors in the second choice.  
+When you play ahead, you basically have one choice, and that's between 1/3 or 2/3 chance of winning the door.  
+And you should switch. :D
 
 ## References
 
