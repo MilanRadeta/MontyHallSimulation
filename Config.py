@@ -1,8 +1,10 @@
+from numpy.lib.arraysetops import isin
 from ChoiceStrategy import Random, RandomClosed
+
 
 class Config(object):
 
-    def __init__(self, config = None):
+    def __init__(self, config=None):
         self.strategy = None
         self.totalDoors = None
         self.totalTries = None
@@ -12,10 +14,11 @@ class Config(object):
         self.successDefinitions = None
 
         if (config is not None):
-            self.openingStrategy = config.openingStrategy
-            self.initChoiceStrategy = config.initChoiceStrategy
-            self.successDefinitions = config.successDefinitions
-        
+            self.__dict__.update(config.__dict__.items())
+
+    def getPrioritizedProps(self):
+        return [self.initChoiceStrategy, self.totalTries,
+                self.totalDoors, self.strategy, self.successDefinitions]
 
     def __str__(self):
         return f'<strategy={self.strategy.__name__}, totalDoors={self.totalDoors}, totalTries={self.totalTries}>'
