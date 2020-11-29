@@ -20,7 +20,7 @@ class InitCarDoor(SuccessDefinition):
 
 class InitGoatDoor(SuccessDefinition):
     def hasWon(game):
-        return game.chosenDoors[0] != game.rewardDoor
+        return game.chosenDoors[0] is not None and game.chosenDoors[0] != game.rewardDoor
 
 
 AllDefinitions = [CarDoor, GoatDoor,
