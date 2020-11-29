@@ -1,10 +1,10 @@
 from Config import Config
 from SuccessDefinition import AllDefinitions
 from Simulator import Simulator
-from ChoiceStrategy import CommonStrategies, FirstDoor, Random
+from ChoiceStrategy import CommonStrategies, NoDoor, Random
 
 config = Config()
-config.initChoiceStrategy = [Random, FirstDoor]
+config.initChoiceStrategy = [Random, NoDoor]
 config.strategy = CommonStrategies
 config.successDefinitions = AllDefinitions
 config.totalDoors = [3, 5]
