@@ -12,27 +12,22 @@ class DoorsGame(object):
             self)
         self.openingStrategy: ChoiceStrategy = config.openingStrategy(self)
         self.choiceStrategy: ChoiceStrategy = config.strategy(self)
+        self.positioningStrategy: ChoiceStrategy = config.positioningStrategy(
+            self)
         self.openDoors = []
         self.doors = [Door(i) for i in range(config.totalDoors)]
         self.closedDoors = self.doors.copy()
-        self.setRewardDoor()
-        self.emptyDoors = [door for door in self.doors if not door.hasReward]
-        self.emptyClosedDoors = [door for door in self.emptyDoors]
         self.chosenDoor = None
         self.chosenDoors = []
+        self.rewardDoor = None
 
-    def getRandomClosedDoor(self):
-        return random.choice(self.closedDoors)
-
-    def getAvailableEmptyClosedDoors(self):
-        return [door for door in self.emptyClosedDoors if door != self.chosenDoor]
-
-    def getRandomEmptyClosedDoor(self):
-        doors = self.getAvailableEmptyClosedDoors()
-        return random.choice(doors)
+    def getEmptyClosedDoors(self):
+        return [door for door in self.closedDoors if not door.hasReward]
 
     def setRewardDoor(self):
-        self.rewardDoor = self.getRandomClosedDoor()
+        if self.rewardDoor is not None:
+            self.rewardDoor.hasReward = False
+        self.rewardDoor = self.positioningStrategy.chooseDoor()
         self.rewardDoor.hasReward = True
 
     def openNextDoor(self):
@@ -41,8 +36,6 @@ class DoorsGame(object):
 
     def openDoor(self, door: Door):
         door.isOpen = True
-        if door in self.emptyClosedDoors:
-            self.emptyClosedDoors.remove(door)
         if door in self.closedDoors:
             self.closedDoors.remove(door)
         self.openDoors.append(door)
@@ -62,8 +55,10 @@ class DoorsGame(object):
         self.chosenDoors.append(self.chosenDoor)
 
     def runGame(self):
+        self.setRewardDoor()
         self.chooseDoor(initChoice=True)
         while(len(self.closedDoors) > 2):
+            self.setRewardDoor()
             self.openNextDoor()
             self.chooseDoor()
 
