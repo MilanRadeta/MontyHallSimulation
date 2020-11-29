@@ -1,8 +1,7 @@
-from matplotlib.pyplot import ylabel
+import seaborn as sns
 import pandas
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-import seaborn as sns
 from ScoreItem import ScoreItem
 from Config import Config
 
@@ -14,25 +13,43 @@ plt.rcParams['figure.titlesize'] = 15
 class Score(object):
     def __init__(self, config: Config):
         self.config = config
+        self.axes = []
+        for prop in config.getPrioritizedProps():
+            self.axes.append(prop if (isinstance(prop, list)) else [prop])
         self.reset()
+
+    def getSubscore(self, config, depth):
+        score = self.score
+        props = config.getPrioritizedProps()[:depth]
+        for prop in props:
+            key = prop.__name__ if isinstance(
+                prop, type) else prop
+            score = score[key]
+        return score
 
     def reset(self):
         self.score = {}
-        for totalTries in self.config.totalTries:
-            scoreForTries = {}
-            for totalDoors in self.config.totalDoors:
-                scoreForDoors = {}
-                for strategy in self.config.strategy:
-                    scoreForStrategy = {}
-                    for definition in self.config.successDefinitions:
-                        scoreForStrategy[definition.__name__] = ScoreItem()
-                    scoreForDoors[strategy.__name__] = scoreForStrategy
-                scoreForTries[totalDoors] = scoreForDoors
-            self.score[totalTries] = scoreForTries
+
+        subscores = [self.score]
+        i = 0
+        for axis in self.axes:
+            i += 1
+            newSubscores = []
+            for score in subscores:
+                for elem in axis:
+                    key = elem.__name__ if isinstance(
+                        elem, type) else elem
+                    if i == len(self.axes):
+                        score[key] = ScoreItem()
+                    else:
+                        subscore = {}
+                        newSubscores.append(subscore)
+                        score[key] = subscore
+            subscores = newSubscores
 
     def incScore(self, config, name, val):
-        scores = self.score[config.totalTries][config.totalDoors][config.strategy.__name__]
-        scores[name] += val
+        score = self.getSubscore(config, -1)
+        score[name] += val
 
     def update(self, score, config):
         for definition in score:
@@ -63,7 +80,7 @@ class Score(object):
         plt.show()
 
     def printByConfig(self, config: Config):
-        scores = self.score[config.totalTries][config.totalDoors]
+        scores = self.getSubscore(config, -2)
         scores = self.processScores(scores)
         scores = pandas.DataFrame(scores)
         self.printScores(scores, config)
@@ -82,7 +99,8 @@ class Score(object):
         for totalTries in self.config.totalTries:
             col = 0
             for totalDoors in self.config.totalDoors:
-                scores = self.score[totalTries][totalDoors]
+                scores = self.getSubscore(self.config, -4)
+                scores = scores[totalTries][totalDoors]
                 scores = self.processScores(scores)
                 scores = pandas.DataFrame(scores)
 
