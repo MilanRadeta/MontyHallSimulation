@@ -37,10 +37,21 @@ class FirstDoor(Random):
         return self.game.closedDoors[0]
 
 
+class RandomNonChosenEmptyClosed(ChoiceStrategy):
+    def chooseDoor(self):
+        doors = [door for door in self.game.closedDoors if door !=
+                 self.game.chosenDoor and not door.hasReward]
+        return random.choice(doors)
+
+
+class RandomClosedOrReward(ChoiceStrategy):
+    def chooseDoor(self):
+        return self.game.rewardDoor or random.choice(self.game.closedDoors)
+
+
 class RandomClosed(ChoiceStrategy):
     def chooseDoor(self):
-        doors = self.game.getAvailableEmptyClosedDoors()
-        return random.choice(doors)
+        return random.choice(self.game.closedDoors)
 
 
 class LastClosedDoor(ChoiceStrategy):
