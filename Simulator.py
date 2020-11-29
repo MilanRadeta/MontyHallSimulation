@@ -19,13 +19,10 @@ class Simulator(object):
     def run(self):
         print(f'Running simulator...')
         self.score.reset()
-        for totalTries in self.config.totalTries:
-            for totalDoors in self.config.totalDoors:
-                for strategy in self.config.strategy:
-                    self.currentConfig.strategy = strategy
-                    self.currentConfig.totalDoors = totalDoors
-                    self.currentConfig.totalTries = totalTries
-
-                    self.simulate()
-                self.score.printByConfig(self.currentConfig)
+        for config in self.config.getSubconfigs(-2):
+            self.currentConfig = Config(config)
+            for strategy in config.strategy:
+                self.currentConfig.strategy = strategy
+                self.simulate()
+            self.score.printByConfig(self.currentConfig)
         self.score.plotAll()
