@@ -8,7 +8,8 @@ from Door import Door
 class DoorsGame(object):
     def __init__(self, config: Config):
         self.config = config
-        self.initChoiceStrategy: ChoiceStrategy = config.initChoiceStrategy(self)
+        self.initChoiceStrategy: ChoiceStrategy = config.initChoiceStrategy(
+            self)
         self.openingStrategy: ChoiceStrategy = config.openingStrategy(self)
         self.choiceStrategy: ChoiceStrategy = config.strategy(self)
         self.openDoors = []
@@ -24,8 +25,6 @@ class DoorsGame(object):
         return random.choice(self.closedDoors)
 
     def getAvailableEmptyClosedDoors(self):
-        if self.chosenDoor is None:
-            raise Exception('A door must be chosen first')
         return [door for door in self.emptyClosedDoors if door != self.chosenDoor]
 
     def getRandomEmptyClosedDoor(self):
@@ -48,9 +47,9 @@ class DoorsGame(object):
             self.closedDoors.remove(door)
         self.openDoors.append(door)
 
-    def chooseDoor(self, index=None):
+    def chooseDoor(self, index=None, initChoice=False):
         if index is None:
-            strategy = self.initChoiceStrategy if self.chosenDoor is None else self.choiceStrategy
+            strategy = self.initChoiceStrategy if initChoice else self.choiceStrategy
             self.chosenDoor = strategy.chooseDoor()
             self.chosenDoors.append(self.chosenDoor)
             return
@@ -63,7 +62,7 @@ class DoorsGame(object):
         self.chosenDoors.append(self.chosenDoor)
 
     def runGame(self):
-        self.chooseDoor()
+        self.chooseDoor(initChoice=True)
         while(len(self.closedDoors) > 2):
             self.openNextDoor()
             self.chooseDoor()
