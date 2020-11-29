@@ -18,13 +18,15 @@ class Score(object):
             self.axes.append(prop if (isinstance(prop, list)) else [prop])
         self.reset()
 
+    def getKey(self, prop):
+        return prop.__name__ if isinstance(
+            prop, type) else prop
+
     def getSubscore(self, config, depth):
         score = self.score
         props = config.getPrioritizedProps()[:depth]
         for prop in props:
-            key = prop.__name__ if isinstance(
-                prop, type) else prop
-            score = score[key]
+            score = score[self.getKey(prop)]
         return score
 
     def reset(self):
@@ -37,8 +39,7 @@ class Score(object):
             newSubscores = []
             for score in subscores:
                 for elem in axis:
-                    key = elem.__name__ if isinstance(
-                        elem, type) else elem
+                    key = self.getKey(elem)
                     if i == len(self.axes):
                         score[key] = ScoreItem()
                     else:
@@ -87,29 +88,26 @@ class Score(object):
 
     def plotAll(self, outputFile='output.pdf'):
         print(f'Plotting results...')
-        fig, axs = plt.subplots(len(self.config.totalTries),
-                                len(self.config.totalDoors),
-                                sharex=False, sharey=False,
-                                squeeze=False,
-                                gridspec_kw={"hspace": 1, "wspace": 1})
-        fig.suptitle('Probabilities')
 
-        row = 0
-        col = 0
-        for totalTries in self.config.totalTries:
-            col = 0
-            for totalDoors in self.config.totalDoors:
-                scores = self.getSubscore(self.config, -4)
-                scores = scores[totalTries][totalDoors]
-                scores = self.processScores(scores)
-                scores = pandas.DataFrame(scores)
+        subconfigs = self.config.getSubconfigs(-4)
 
-                ax = axs[row, col]
-                sns.heatmap(scores, ax=ax, annot=True)
-                ax.set_title(f'sims={totalTries}, doors={totalDoors}')
+        rows = len(subconfigs) * len(self.config.totalTries)
+        cols = len(self.config.totalDoors)
 
-                col += 1
-            row += 1
+        index = 0
+        for config in subconfigs:
+            for totalTries in config.totalTries:
+                for totalDoors in config.totalDoors:
+                    index += 1
+                    scores = self.getSubscore(config, -4)
+                    scores = scores[totalTries][totalDoors]
+                    scores = self.processScores(scores)
+                    scores = pandas.DataFrame(scores)
+
+                    ax = plt.subplot(rows, cols, index)
+                    ax.set_title(
+                        f'initChoice: {config.initChoiceStrategy.__name__} \n sims={totalTries}, doors={totalDoors}')
+                    sns.heatmap(scores, ax=ax, annot=True)
 
         print(f'Saving to {outputFile}...')
         pdf = PdfPages(outputFile)
