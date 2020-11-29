@@ -4,7 +4,7 @@ import random
 class ChoiceStrategy(object):
     def __init__(self, game):
         self.game = game
-        
+
     def chooseDoor(self):
         pass
 
@@ -31,9 +31,11 @@ class SwitchOnce(Switch):
     def chooseDoor(self):
         return self.game.chosenDoor if (self.game.chosenDoor is not None and len(self.game.closedDoors) > 2) else Switch.chooseDoor(self)
 
+
 class FirstDoor(Random):
     def chooseDoor(self):
         return self.game.closedDoors[0]
+
 
 class RandomClosed(ChoiceStrategy):
     def chooseDoor(self):
@@ -48,7 +50,7 @@ class LastClosedDoor(ChoiceStrategy):
         while door is None or door.hasReward or door == self.game.chosenDoor:
             door = self.game.closedDoors[index]
             index -= 1
-        
+
         return door
 
 
@@ -57,5 +59,10 @@ class PreviouslyChosenDoor(ChoiceStrategy):
         return self.game.chosenDoors[-2] if len(self.game.chosenDoors) > 2 and self.game.chosenDoors[-2] != self.game.chosenDoor else Random.chooseDoor(self)
 
 
+class NoDoor(ChoiceStrategy):
+    def chooseDoor(self):
+        return None
+
+
 CommonStrategies = [Random, Keep,
-                 Switch, SwitchOnce]
+                    Switch, SwitchOnce]
