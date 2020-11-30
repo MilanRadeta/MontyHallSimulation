@@ -18,26 +18,28 @@ For more info, check the references below or ask Google.
 
 ## Why another Monty Hall simulation?
 
-I was bored. I couldn't sleep. And the reason I couldn't sleep was that I was not satisfied with the answer that "switching to another door will increase your chances" and the existing explanations seemed a little fuzzy. The existing simulation programs are interpreted as that if you keep switching your choice, you'll get the reward in 2/3 of the time.  
+I was bored. I couldn't sleep. And the reason I couldn't sleep was that I was not satisfied with the answer that "switching to another door will increase your chances" and the existing explanationsy.  
 
 I was one of those 50/50 guys. And I thought I figured it out. So I decided to share my opinion, analysis and results to prove that 50/50 is the right answer and/or make a fool of myself. I did the latter, learnt something and now am just giving another look at the problem and its solution.
 
 ## Hypothesis - Choice vs the Illusion of (Second) Choice (IoC)
 
 Since the host opens one of remaining doors, the are two ways of looking at the new situation when the contestant is offered to make the choice again:
-* it's a new independent situation, where choice does not take into account the chances of previous situation, and making the chances to win the reward 50/50, if the contestant again randomly decides between the doors
-* it's the same situation as before, but the contestant is now choosing between 1 door and all of the remaining doors, not 1 of 3 doors
+* it's a new independent situation, where choice does not take into account the chances of previous situation, and making the chances to win the reward 50/50, if the contestant again randomly decides between the doors (for instance, by flipping a coin)
+* it's the same situation as before, but the contestant is playing ahead and is choosing between 1 door and all of the remaining doors, not 1 of 3 doors
 
 The "Keep the same door strategy" says there's a 1/3 chance to win the reward.  
-It doesn't matter if host is gonna show you one of the remaining doors - illusion of choice.  
+It doesn't matter if host is gonna show you one of the remaining doors.  
 It's the same situation if you were only given one choice, just at the beginning of the game and that's it  
 Basically, 1/3 is the answer to the following question: "What's the chance for each door to have a reward behind it?"
 
 The "Switching the door strategy" says there's a 2/3 chance to win the reward.  
-It doesn't matter if host is gonna show you one of the remaining doors, you'll always switch - illusion of choice.  
+It doesn't matter if host is gonna show you one of the remaining doors, you'll always switch.  
 The 2/3 also indicates the chance that the door you chose initially DOESN'T contain the reward.  
 So, in contrast to previous strategy, 2/3 is the answer to the following question: "What's the chance for each door to NOT have a reward behind it?"  
 It also indicates the chance that the reward is somewhere in the whole group of remaining doors. So when you switch, you're actually choosing the whole other group of doors, not just one door. It's just that in that group only one door is left closed when you decided to switch and this explanation works when the total number of doors is 3.  
+
+I came up with a term of Illusion of Second Choice, because as far as the computer simulation is concerned, you're not actually making a second new choice in Keep and Switch strategies. You're playing ahead.  
 
 Therefore, I've created more than these two "strategies" in this simulation and specified different definitions of a successful choice.
 
@@ -127,7 +129,7 @@ There's no IoC in this strategy, since contestant must randomly choose between t
 We can't say that the contestant can switch back and forth between two doors, since it's possible for that one of those two doors open during the game.  
 
 The results for Switch Strategy and Reward Door DoS tend to 2/3 chance.  
-This is because that in case of using this strategy, the result is not dependent on N, and is actually reverting back to edge case of N=3.
+This is because that in case of using this strategy, the result is not dependent on N, and is actually reverting back to edge case of N = 3.
 Further analysis of this strategy will be done in the future.
 
 ### Switch Once
@@ -149,8 +151,6 @@ Therefore, I created 4 DoS:
 * GoatDoor
 * InitCarDoor
 * InitGoatDoor
-
-Some of these DoSs might seem counter-intuitive and illogical, but so do the chances of winning the game by switching the doors.  
 
 ### Car Door
 
@@ -183,18 +183,18 @@ You'll notice in the results there's a link between this DoS and Switch CS.
 
 ## Results and Analysis
 
-I ran the simulation for all CSs and DoSs, N=(3,5,10) and G=10^k where k = [1, 5].
+I ran the simulation for all CSs and DoSs, N=(3,5,10) and G=10^k where k = [3, 5].
 
 The reason why I chose N=(3,5,10) is because of the readable percentages:  
-* N=3, 1/N~=0.3, (N-1)~=0.6
-* N=5, 1/N=0.2, (N-1)=0.8
-* N=10, 1/N=0.1, (N-1)=0.9
+* N = 3,  1/N ~= 0.3, (N-1) ~= 0.6
+* N = 5,  1/N = 0.2,  (N-1) = 0.8
+* N = 10, 1/N = 0.1,  (N-1) = 0.9
 
-The results are plotted in `output.pdf`.
+The results are plotted in `outputs/output.pdf`.
 
-An excerpt from the pdf with G=10^4 and G=10^5 are shown in the image below.
+An excerpt from the pdf is shown in the image below.
 
-![Excerpt](/excerpt.PNG)
+![Excerpt](/output/excerpt.PNG)
 
 ### Key takeaways:
 #### Last Chosen Door - CarDoor and GoatDoor
@@ -205,7 +205,7 @@ The results actually confirm that the chances are 50/50.
 These results do not vary when changing the number of doors.
 ##### Switch and Switch Once
 For the edge case of N = 3, the values are the same, since the strategy is performed in the same way.  
-For N > 3 the results differ, but the Switch strategy reverts back to situation where N = 3.  
+For N > 3 the results differ, but the Switch strategy reverts back to situation where N = 3 in the end.  
 ##### Keep and Switch Once
 The two strategies are complementary.  
 Aligns with 1/N vs 2/N theory.  
@@ -235,6 +235,47 @@ You are welcome to create issues for me if you have any advice, wishes, observat
 The chance is 50/50, if you randomly choose between the remaining two doors in the second choice.  
 When you play ahead, you basically have one choice, and that's between 1/3 or 2/3 chance of winning the door.  
 And you should switch. :D
+
+## Additional simulations
+
+I ran additional simulations for G = 10^4 and N = 3 and N = 5 with some different choice strategies used for:
+* picking the first door
+* repositioning the reward
+* opening the doors
+
+In these simulations I only used the CarDoor and GoatDoor DoSs.
+
+### Initial Choice
+
+I've created two new CSs:
+* FirstDoor
+** shows that the sequence of the doors does not matter
+** simulation results are the same as with default init CS - Random
+* NoDoor
+** gives 1/(N-1) chance for Keep and (N-2)/(N-1) chance for SwitchOnce strategy
+** for N = 3, Switch strategy gives 1/2 chance, while for N > 3 it again reverts to N = 3 with default initial CS
+
+![Excerpt](/output/initChoiceExcerpt.PNG)
+
+### Repositioning the reward
+
+Alongside the default *RandomClosedOrReward* positioning CS, I've also used *RandomClosed* CS.  
+*RandomClosedOrReward* doesn't reposition the reward and it has been used as default opening CS for other simulations. It returns the reward door or a random door if the reward door is not already set.  
+*RandomClosed* may reset the reward door after each opening.  
+For N = 3 the simulation results are the same between the 2 CSs and prove that if the reward is repositioned each turn, it doesn't affect the chances, since the contestant doesn't know the reward position either way.  
+However, for N > 3 it reverts back to N = 3.
+
+![Excerpt](/output/positioningExcerpt.PNG)
+
+### Opening the doors
+
+Alongside the default *RandomNonChosenEmptyClosed* opening CS, I've also used *RandomNonChosenClosed* and *RandomClosed* CSs.  
+*RandomNonChosenEmptyClosed* lets host open the door with no reward that's not chosen by the contestant.
+*RandomNonChosenClosed* lets host open any closed door except the one chosen by the contestant. This means the host can also open the door with reward and therefore the contestant can lose immediately after first try. This CS gives all the cases for CarDoor DoS 1/N chance.
+*RandomClosed* lets host open any closed door, regardless whether it has the reward or is chosen by contestant. It gives the same 1/N chance as *RandomNonChosenClosed*.
+
+![Excerpt](/output/openingExcerpt.PNG)
+
 
 ## References
 
