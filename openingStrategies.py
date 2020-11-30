@@ -1,10 +1,11 @@
 from Config import Config
 from SuccessDefinition import CommonDefinitions
 from Simulator import Simulator
-from ChoiceStrategy import CommonStrategies, RandomClosed, RandomNonChosenEmptyClosed
+from ChoiceStrategy import CommonStrategies, RandomClosed, RandomNonChosenClosed, RandomNonChosenEmptyClosed
 
 config = Config()
-config.openingStrategy = [RandomNonChosenEmptyClosed, RandomClosed]
+config.openingStrategy = [RandomNonChosenEmptyClosed,
+                          RandomNonChosenClosed, RandomClosed]
 config.strategy = CommonStrategies
 config.successDefinitions = CommonDefinitions
 config.totalDoors = [3, 5]
