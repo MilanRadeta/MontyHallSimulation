@@ -25,3 +25,5 @@ class InitGoatDoor(SuccessDefinition):
 
 AllDefinitions = [CarDoor, GoatDoor,
                   InitCarDoor, InitGoatDoor]
+
+CommonDefinitions = [CarDoor, GoatDoor]
