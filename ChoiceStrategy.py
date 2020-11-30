@@ -54,22 +54,6 @@ class RandomClosed(ChoiceStrategy):
         return random.choice(self.game.closedDoors)
 
 
-class LastClosedDoor(ChoiceStrategy):
-    def chooseDoor(self):
-        index = -1
-        door = None
-        while door is None or door.hasReward or door == self.game.chosenDoor:
-            door = self.game.closedDoors[index]
-            index -= 1
-
-        return door
-
-
-class PreviouslyChosenDoor(ChoiceStrategy):
-    def chooseDoor(self):
-        return self.game.chosenDoors[-2] if len(self.game.chosenDoors) > 2 and self.game.chosenDoors[-2] != self.game.chosenDoor else Random.chooseDoor(self)
-
-
 class NoDoor(ChoiceStrategy):
     def chooseDoor(self):
         return None
