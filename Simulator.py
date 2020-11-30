@@ -16,7 +16,7 @@ class Simulator(object):
             result = DoorsGame(self.currentConfig).runGame()
             self.score.update(result, self.currentConfig)
 
-    def run(self):
+    def run(self, prefix='', prefixParams=(), outputFile='outputs/output.pdf'):
         print(f'Running simulator...')
         self.score.reset()
         for config in self.config.getSubconfigs(-2):
@@ -25,4 +25,5 @@ class Simulator(object):
                 self.currentConfig.strategy = strategy
                 self.simulate()
             self.score.printByConfig(self.currentConfig)
-        self.score.plotAll()
+        self.score.plotAll(
+            prefix=prefix, prefixParams=prefixParams, outputFile=outputFile)

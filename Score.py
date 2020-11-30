@@ -19,8 +19,7 @@ class Score(object):
         self.reset()
 
     def getKey(self, prop):
-        return prop.__name__ if isinstance(
-            prop, type) else prop
+        return prop.__name__ if isinstance(prop, type) else prop
 
     def getSubscore(self, config, depth):
         score = self.score
@@ -71,22 +70,13 @@ class Score(object):
         print(scores)
         print()
 
-    def plotScores(self, scores, config):
-        sns.heatmap(scores, annot=True)
-        plt.xticks(rotation=0)
-        plt.text(x=1.75, y=-0.3, s='PROBABILITIES',
-                 fontsize=16, weight='bold')
-        plt.text(x=1.8, y=-0.2, s=f'sims={config.totalTries}, doors={config.totalDoors}',
-                 fontsize=10, weight='normal')
-        plt.show()
-
     def printByConfig(self, config: Config):
         scores = self.getSubscore(config, -2)
         scores = self.processScores(scores)
         scores = pandas.DataFrame(scores)
         self.printScores(scores, config)
 
-    def plotAll(self, outputFile='output.pdf'):
+    def plotAll(self, prefix='', prefixParams=(), outputFile='output.pdf'):
         print(f'Plotting results...')
 
         subconfigs = self.config.getSubconfigs(-4)
@@ -105,8 +95,12 @@ class Score(object):
                     scores = pandas.DataFrame(scores)
 
                     ax = plt.subplot(rows, cols, index)
+
+                    params = tuple(config.__dict__[p].__name__ if isinstance(config.__dict__[
+                                   p], type) else config.__dict__[p] for p in prefixParams)
+                    prefixValue = prefix % params
                     ax.set_title(
-                        f'initChoice: {config.initChoiceStrategy.__name__} \n sims={totalTries}, doors={totalDoors}')
+                        f'{prefixValue} \n sims={totalTries}, doors={totalDoors}')
                     sns.heatmap(scores, ax=ax, annot=True)
 
         print(f'Saving to {outputFile}...')
