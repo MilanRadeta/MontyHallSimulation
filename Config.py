@@ -17,11 +17,11 @@ class Config(object):
             self.__dict__.update(config.__dict__.items())
 
     def getPrioritizedProps(self):
-        return [self.positioningStrategy, self.initChoiceStrategy, self.totalTries,
+        return [self.openingStrategy, self.positioningStrategy, self.initChoiceStrategy, self.totalTries,
                 self.totalDoors, self.strategy, self.successDefinitions]
 
     def getPrioritizedPropKeys(self):
-        return ["positioningStrategy", "initChoiceStrategy", "totalTries", "totalDoors", "strategy", "successDefinitions"]
+        return ["openingStrategy", "positioningStrategy", "initChoiceStrategy", "totalTries", "totalDoors", "strategy", "successDefinitions"]
 
     def getSubconfigs(self, depth):
         res = [self]
