@@ -7,5 +7,5 @@ config = Config()
 config.strategy = CommonStrategies
 config.successDefinitions = AllDefinitions
 config.totalDoors = [3, 5, 10]
-config.totalTries = [10**(i+1) for i in range(4)]
+config.totalTries = [10**i for i in range(3, 5)]
 Simulator(config).run()
