@@ -54,6 +54,13 @@ class RandomClosed(ChoiceStrategy):
         return random.choice(self.game.closedDoors)
 
 
+class RandomNonChosenClosed(ChoiceStrategy):
+    def chooseDoor(self):
+        doors = [door for door in self.game.closedDoors if door !=
+                 self.game.chosenDoor]
+        return random.choice(doors)
+
+
 class NoDoor(ChoiceStrategy):
     def chooseDoor(self):
         return None
