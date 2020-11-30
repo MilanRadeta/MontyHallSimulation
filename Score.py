@@ -6,8 +6,7 @@ from ScoreItem import ScoreItem
 from Config import Config
 
 plt.rcParams['xtick.labelsize'] = plt.rcParams['ytick.labelsize'] = 10
-plt.rcParams['figure.figsize'] = (16, 16)
-plt.rcParams['figure.titlesize'] = 15
+plt.rcParams['figure.figsize'] = (16, 14)
 
 
 class Score(object):
