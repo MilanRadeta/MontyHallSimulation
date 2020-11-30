@@ -194,7 +194,7 @@ The results are plotted in `outputs/output.pdf`.
 
 An excerpt from the pdf is shown in the image below.
 
-![Excerpt](/output/excerpt.PNG)
+![Excerpt](/outputs/excerpt.PNG)
 
 ### Key takeaways:
 #### Last Chosen Door - CarDoor and GoatDoor
@@ -255,7 +255,7 @@ I've created two new CSs:
 ** gives 1/(N-1) chance for Keep and (N-2)/(N-1) chance for SwitchOnce strategy
 ** for N = 3, Switch strategy gives 1/2 chance, while for N > 3 it again reverts to N = 3 with default initial CS
 
-![Excerpt](/output/initChoiceExcerpt.PNG)
+![Excerpt](/outputs/initChoiceExcerpt.PNG)
 
 ### Repositioning the reward
 
@@ -265,7 +265,7 @@ Alongside the default *RandomClosedOrReward* positioning CS, I've also used *Ran
 For N = 3 the simulation results are the same between the 2 CSs and prove that if the reward is repositioned each turn, it doesn't affect the chances, since the contestant doesn't know the reward position either way.  
 However, for N > 3 it reverts back to N = 3.
 
-![Excerpt](/output/positioningExcerpt.PNG)
+![Excerpt](/outputs/positioningExcerpt.PNG)
 
 ### Opening the doors
 
@@ -274,7 +274,7 @@ Alongside the default *RandomNonChosenEmptyClosed* opening CS, I've also used *R
 *RandomNonChosenClosed* lets host open any closed door except the one chosen by the contestant. This means the host can also open the door with reward and therefore the contestant can lose immediately after first try. This CS gives all the cases for CarDoor DoS 1/N chance.
 *RandomClosed* lets host open any closed door, regardless whether it has the reward or is chosen by contestant. It gives the same 1/N chance as *RandomNonChosenClosed*.
 
-![Excerpt](/output/openingExcerpt.PNG)
+![Excerpt](/outputs/openingExcerpt.PNG)
 
 
 ## References
