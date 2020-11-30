@@ -8,21 +8,21 @@ from Door import Door
 class DoorsGame(object):
     def __init__(self, config: Config):
         self.config = config
+
         self.initChoiceStrategy: ChoiceStrategy = config.initChoiceStrategy(
             self)
         self.openingStrategy: ChoiceStrategy = config.openingStrategy(self)
         self.choiceStrategy: ChoiceStrategy = config.strategy(self)
         self.positioningStrategy: ChoiceStrategy = config.positioningStrategy(
             self)
+
         self.openDoors = []
         self.doors = [Door(i) for i in range(config.totalDoors)]
         self.closedDoors = self.doors.copy()
-        self.chosenDoor = None
         self.chosenDoors = []
-        self.rewardDoor = None
 
-    def getEmptyClosedDoors(self):
-        return [door for door in self.closedDoors if not door.hasReward]
+        self.chosenDoor = None
+        self.rewardDoor = None
 
     def setRewardDoor(self):
         if self.rewardDoor is not None:
